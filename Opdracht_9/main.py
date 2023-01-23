@@ -7,6 +7,7 @@ lastTimes = [0, 0, 0, 0]
 delays = [500, 500, 0, 0]
 selectedLed = -1
 
+# Setup van alle pins
 GPIO.setmode(GPIO.BCM)
 for i in range(4):
     GPIO.setup(ardPins[i], GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
@@ -16,9 +17,11 @@ for i in range(4):
 def millis():
     return time.time() * 1000
 
+# Instellen delay per LED pin
 def setDelay(index, delay):
     delays[index] = delay
 
+# Kijkt per pin of er een signaal binnen komt vanaf de Arduino
 def checkForInput():
     global selectedLed
     for i in range(4):
@@ -34,6 +37,7 @@ def checkForInput():
 def loop():
     global lastTimes
     for i in range(4):
+        # Als er een set aantal milliseconden gepasseerd is sinds de laatste keer
         if millis() - lastTimes[i] >= delays[i]:
             lastTimes[i] = millis()
             if GPIO.input(outputPins[i]):

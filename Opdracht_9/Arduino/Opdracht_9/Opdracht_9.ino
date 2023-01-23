@@ -13,6 +13,7 @@ void setup(){
 }
 
 void loop(){
+  // Uitlezen signaal infrarood afstandsbediening
   if (irrecv.decode(&results)){
     Serial.println(results.value);
     readButtons(results.value);
@@ -21,6 +22,7 @@ void loop(){
   }
 }
 
+// Omzetten signaal afstandsbediening van knoppen 1 tot 4 -> zero-indexed cijfer
 void readButtons(int value){
   switch(results.value){
     case 16724175:
@@ -38,6 +40,7 @@ void readButtons(int value){
   }
 }
 
+// Schrijven signaal naar pins die verbonden zijn met de Raspberry Pi
 void sendSignal(int i){
   digitalWrite(raspPins[i], HIGH);
   delay(50);
